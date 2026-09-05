@@ -9,13 +9,13 @@ manifest:
     # - name: sekigon-gonnoc  # <-- PAW3222
     #   url-base: https://github.com/sekigon-gonnoc
     - name: caksoylar  # <-- RGB LED
-      url-base: https://github.com/caksoylar  
+      url-base: https://github.com/caksoylar
     - name: zettaface  # <-- Input Processor Keybind
       url-base: https://github.com/zettaface
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3.0
+      revision: v0.3-branch
       import: app/west.yml
     - name: zmk-pmw3610-driver
       remote: badjeff
@@ -25,7 +25,7 @@ manifest:
     #   revision: main
     - name: zmk-rgbled-widget
       remote: caksoylar
-      revision: main
+      revision: v0.3-branch
     - name: zmk-input-processor-keybind
       remote: zettaface
       revision: main
