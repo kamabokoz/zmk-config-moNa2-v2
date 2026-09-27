@@ -27,7 +27,14 @@ DYStudio (ZMK Studio) に対応させるため、「dya-studio」フォルダの
 ## 5. コンボ・マクロの DYA Studio 対応 (キーマップ変更)
 * **`config/mona2.keymap`**:
   * `#include <behaviors/runtime_macro.dtsi>` を追加し、ランタイムマクロ behavior `&rmacro <slot>` を使えるようにしました。DYA Studio のマクロ画面で作成したマクロのスロット番号を、キーマップエディタで `&rmacro <slot>` として割り当てます。
-  * 静的コンボ (`zmk,combos`) を `runtime_combo_defaults` (`cormoran,runtime-combo-defaults`) に移行しました。既存の 2 つ (slot 0: `&lt 4 ESC` / 38+39、slot 1: `&kp TAB` / 11+12) はコンパイル時デフォルトとして残り、DYA Studio から編集・追加・削除できます。
-  * `&BT0` / `&BT1` / `&screenshot` / `&henkan` などの既存マクロは静的マクロのまま維持しています (キーへの割り当ては DYA Studio からも可能ですが、中身の編集はできません)。
+  * 静的コンボ (`zmk,combos`) を `runtime_combo_defaults` (`cormoran,runtime-combo-defaults`) に移行しました。既存の 2 つ (slot 0: `&lt 2 ESC` (MOUSE_W) / 38+39、slot 1: `&kp TAB` / 11+12) はコンパイル時デフォルトとして残り、DYA Studio から編集・追加・削除できます。
+  * `&screenshot` / `&henkan` などの既存マクロは静的マクロのまま維持しています (キーへの割り当ては DYA Studio からも可能ですが、中身の編集はできません)。
 * Kconfig (`CONFIG_ZMK_RUNTIME_COMBO*` / `CONFIG_ZMK_RUNTIME_MACRO*`) と `west.yml` のモジュールは既に追加済みです。
 * NOTE: keymap-drawer は `runtime_combo_defaults` を解釈しないため、自動生成される図からコンボ表示が消えます。
+
+## 6. Keyboard Abyss 書き出しキーマップへの移行 (7 レイヤー構成)
+* レイヤーを WIN 系 7 つに整理: 0 WIN / 1 NUM_W / 2 MOUSE_W / 3 SCRL_W / 4 FN_W / 5 FN2 / 6 BLE_W (MAC 系は削除)。
+* Keyboard Abyss の書き出しに無い include・マクロ・behavior・コンボ・エンコーダ設定を旧キーマップから復元し、`&lt` のレイヤー番号を新構成に合わせて振り直し。
+* `BT0` / `BT1` マクロ (WIN/MAC ベースレイヤー切替込み) は MAC レイヤー廃止に伴い削除し、`&bt BT_SEL 0/1` に置き換え。
+* トラックボールのスクロールレイヤー (`mona2_r.overlay` の `active-layers`) を layer3 (SCRL_W) に変更。
+* OS ごとのデフォルトレイヤーの選択範囲を 0..0 に変更 (`CONFIG_ZMK_DEFAULT_LAYER_MAX_INDEX=0`)。

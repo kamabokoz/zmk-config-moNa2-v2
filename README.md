@@ -31,7 +31,7 @@ DYA Studio は ZMK Studio をベースに、
 
 キーマップ側にはすでに `#include <behaviors/runtime_macro.dtsi>` を入れてあるので、`&rmacro` は最初から選択できます。
 
-既存の `&BT0` / `&screenshot` / `&henkan` などは従来どおりの **静的マクロ** のままで、DYA Studio からは編集できません（キーマップに直接名前で書かれているため、そのまま残しています）。編集したくなったら DYA Studio 側で同じ内容のランタイムマクロを作り直してキーを差し替えてください。
+既存の `&screenshot` / `&henkan` などは従来どおりの **静的マクロ** のままで、DYA Studio からは編集できません（キーマップに直接名前で書かれているため、そのまま残しています）。編集したくなったら DYA Studio 側で同じ内容のランタイムマクロを作り直してキーを差し替えてください。
 
 ### コンボを DYA Studio から使う
 
@@ -41,7 +41,7 @@ DYA Studio は ZMK Studio をベースに、
 
 | スロット | 内容 | キー位置 |
 | --- | --- | --- |
-| 0 | `&lt 4 ESC` | 38, 39 |
+| 0 | `&lt 2 ESC` (MOUSE_W) | 38, 39 |
 | 1 | `&kp TAB` | 11, 12 |
 
 スロットは全部で 16 個 (`CONFIG_ZMK_RUNTIME_COMBO_MAX_COMBOS`) あるので、残り 14 個は DYA Studio から自由に追加できます。既存スロットを Studio 上で書き換えた場合は、Web UI の **Reset to Default** でここの値へ戻せます。
