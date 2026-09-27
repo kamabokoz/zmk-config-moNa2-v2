@@ -17,7 +17,7 @@ DYA Studio は ZMK Studio をベースに、
 1. 本リポジトリをビルドし、生成された `mona2_r-...uf2`（中央側＝右手）と `mona2_l-...uf2`（周辺側＝左手）をそれぞれの XIAO BLE に書き込みます。
 2. 中央側（右手）を **USB ケーブル** で PC に接続します。
 3. Chrome / Edge などの WebUSB 対応ブラウザで **[https://studio.dya.cormoran.works/](https://studio.dya.cormoran.works/)** を開きます。
-4. キーボード側で `BLE` レイヤー(レイヤー10/11)を有効にし、右下に配置した **`&studio_unlock`** キーを押してアンロック。
+4. キーボード側で `BLE_W` レイヤー(レイヤー6)を有効にし、右下に配置した **`&studio_unlock`** キーを押してアンロック。
 5. DYA Studio 側で「Connect」を押し、USB デバイスとして mona2 を選択。
 6. キーマップ／マクロ／コンボ／トラックボール設定を編集できます。
 
@@ -59,7 +59,7 @@ DYA Studio は ZMK Studio をベースに、
 | **DYA Studio 診断タブ用モジュール (kscan-diagnostics / input-stream / devtool) を追加** | `config/west.yml`, `config/mona2_r.conf`, `config/mona2_l.conf` |
 | **トラックボールドライバを cormoran さんの Studio RPC 対応版へ移行** | `config/west.yml`, `mona2_r.overlay`, `Kconfig.defconfig`, `mona2_r.conf` |
 | トラックボール処理を Runtime Input Processor に置換 | `boards/shields/mona2/mona2.dtsi`, `mona2_r.overlay` |
-| `&studio_unlock` を `ble_win` / `ble_mac` レイヤー右上に配置 | `config/mona2.keymap` |
+| `&studio_unlock` を `BLE_W` レイヤーに配置 | `config/mona2.keymap` |
 | 全レイヤーに `display-name` を設定 | `config/mona2.keymap` |
 | `studio-rpc-usb-uart` snippet (中央側) / ボード名を `xiao_ble/nrf52840/zmk` へ | `build.yaml` |
 
@@ -106,9 +106,10 @@ DYA Studio の診断ページには専用モジュールが必要なパネルが
 ### OS ごとのデフォルトレイヤー
 
 接続先の OS（USB / BLE プロファイルごと）を判定して、起動時のデフォルトレイヤーを
-自動で切り替えられます。mona2 はベースレイヤーが 0 = `WIN` / 1 = `MAC` に分かれているので、
+自動で切り替えられます。現在の mona2 はベースレイヤーが 0 = `WIN` のみ (7 レイヤー構成) なので、
 選択可能な範囲を `CONFIG_ZMK_DEFAULT_LAYER_MIN_INDEX=0` /
-`CONFIG_ZMK_DEFAULT_LAYER_MAX_INDEX=1` に設定しています。
+`CONFIG_ZMK_DEFAULT_LAYER_MAX_INDEX=0` に設定しています。MAC 用ベースレイヤーを追加したら
+`MAX_INDEX` を広げてください。
 実際の割り当ては DYA Studio の「OSごとのデフォルトレイヤー」パネルから行ってください。
 
 キーマップには `&df` behavior も入れてあるので、DYA Studio のキーマップエディタから
