@@ -3,6 +3,8 @@
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <behaviors.dtsi>
 #include <behaviors/runtime-sensor-rotate.dtsi>
+/* DYA Studio のランタイムマクロ (&rmacro <slot>) */
+#include <behaviors/runtime_macro.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -29,15 +31,19 @@ acceleration-exponent = <0>;
 };
 
 / {
-combos {
-compatible = "zmk,combos";
+/* DYA Studio のランタイムコンボ (zmk-feature-runtime-combo) のコンパイル時デフォルト。
+ * 旧 zmk,combos から移行。DYA Studio から編集でき、Reset to Default でここの値に戻る。 */
+runtime_combo_defaults {
+compatible = "cormoran,runtime-combo-defaults";
 
 layer4_ESC {
+slot = <0>;
 bindings = <&lt 4 ESC>;
 key-positions = <39 38>;
 };
 
 tab {
+slot = <1>;
 bindings = <&kp TAB>;
 key-positions = <11 12>;
 };

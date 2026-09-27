@@ -23,3 +23,11 @@ DYStudio (ZMK Studio) に対応させるため、「dya-studio」フォルダの
 
 ## 今後の作業について
 今回は既存のキーバインド（`mona2.keymap`）を維持しています。もし、DYStudio上で「OSごとの自動切り替え」などの新しい独自機能が利用できない場合は、必要に応じて `dya-studio` フォルダに同梱されている新しいキーマップ（Windows用・Mac用でレイヤーが分かれた構造）を手動でマージするか、DYStudioのUI上から再設定を行ってください。
+
+## 5. コンボ・マクロの DYA Studio 対応 (キーマップ変更)
+* **`config/mona2.keymap`**:
+  * `#include <behaviors/runtime_macro.dtsi>` を追加し、ランタイムマクロ behavior `&rmacro <slot>` を使えるようにしました。DYA Studio のマクロ画面で作成したマクロのスロット番号を、キーマップエディタで `&rmacro <slot>` として割り当てます。
+  * 静的コンボ (`zmk,combos`) を `runtime_combo_defaults` (`cormoran,runtime-combo-defaults`) に移行しました。既存の 2 つ (slot 0: `&lt 4 ESC` / 38+39、slot 1: `&kp TAB` / 11+12) はコンパイル時デフォルトとして残り、DYA Studio から編集・追加・削除できます。
+  * `&BT0` / `&BT1` / `&screenshot` / `&henkan` などの既存マクロは静的マクロのまま維持しています (キーへの割り当ては DYA Studio からも可能ですが、中身の編集はできません)。
+* Kconfig (`CONFIG_ZMK_RUNTIME_COMBO*` / `CONFIG_ZMK_RUNTIME_MACRO*`) と `west.yml` のモジュールは既に追加済みです。
+* NOTE: keymap-drawer は `runtime_combo_defaults` を解釈しないため、自動生成される図からコンボ表示が消えます。
