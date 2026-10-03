@@ -2,6 +2,11 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <physical_layouts.dtsi>
+/* NOTE: <input/processors/runtime-input-processor.dtsi> は最終的に
+   modifiers.h を引き込み RC(keycode) を 1 引数で再定義するため、
+   このファイル内のマトリクス RC(row,col) と衝突する。
+   そのため runtime-input-processor.dtsi は overlay 側で
+   `#include "mona2.dtsi"` の後に include すること。 */
 
 / {
     chosen {
@@ -15,49 +20,52 @@
         kscan = <&kscan0>;
         transform = <&default_transform>;
 
+        /* mona2-ver3_topplate.stl のスイッチ穴から算出
+           1u = 17.05mm（プレートのキーピッチ）、rot は 1/100 度（時計回り正）
+           左右の間隔のみ表示用に詰めている（右半分を STL 配置から -264 移動） */
         keys  //                     w   h    x    y     rot    rx    ry
-            = <&key_physical_attrs 100 100    0    0       0     0     0>
-            , <&key_physical_attrs 100 100  100    0       0     0     0>
-            , <&key_physical_attrs 100 100  200    0       0     0     0>
-            , <&key_physical_attrs 100 100  300    0       0     0     0>
-            , <&key_physical_attrs 100 100  400    0       0     0     0>
-            , <&key_physical_attrs 100 100  800    0       0     0     0>
-            , <&key_physical_attrs 100 100  900    0       0     0     0>
-            , <&key_physical_attrs 100 100 1000    0       0     0     0>
-            , <&key_physical_attrs 100 100 1100    0       0     0     0>
-            , <&key_physical_attrs 100 100 1200    0       0     0     0>
-            , <&key_physical_attrs 100 100    0  100       0     0     0>
-            , <&key_physical_attrs 100 100  100  100       0     0     0>
-            , <&key_physical_attrs 100 100  200  100       0     0     0>
-            , <&key_physical_attrs 100 100  300  100       0     0     0>
-            , <&key_physical_attrs 100 100  400  100       0     0     0>
-            , <&key_physical_attrs 100 100  700  100       0     0     0>
-            , <&key_physical_attrs 100 100  800  100       0     0     0>
-            , <&key_physical_attrs 100 100  900  100       0     0     0>
-            , <&key_physical_attrs 100 100 1000  100       0     0     0>
-            , <&key_physical_attrs 100 100 1100  100       0     0     0>
-            , <&key_physical_attrs 100 100 1200  100       0     0     0>
-            , <&key_physical_attrs 100 100    0  200       0     0     0>
-            , <&key_physical_attrs 100 100  100  200       0     0     0>
-            , <&key_physical_attrs 100 100  200  200       0     0     0>
-            , <&key_physical_attrs 100 100  300  200       0     0     0>
-            , <&key_physical_attrs 100 100  400  200       0     0     0>
-            , <&key_physical_attrs 100 100  500  200       0     0     0>
-            , <&key_physical_attrs 100 100  700  200       0     0     0>
-            , <&key_physical_attrs 100 100  800  200       0     0     0>
-            , <&key_physical_attrs 100 100  900  200       0     0     0>
-            , <&key_physical_attrs 100 100 1000  200       0     0     0>
-            , <&key_physical_attrs 100 100 1100  200       0     0     0>
-            , <&key_physical_attrs 100 100 1200  200       0     0     0>
-            , <&key_physical_attrs 100 100    0  300       0     0     0>
-            , <&key_physical_attrs 100 100  100  300       0     0     0>
-            , <&key_physical_attrs 100 100  200  300       0     0     0>
-            , <&key_physical_attrs 100 100  300  300       0     0     0>
-            , <&key_physical_attrs 100 100  400  300       0     0     0>
-            , <&key_physical_attrs 100 100  500  300       0     0     0>
-            , <&key_physical_attrs 100 100  700  300       0     0     0>
-            , <&key_physical_attrs 100 100  800  300       0     0     0>
-            , <&key_physical_attrs 100 100 1200  300       0     0     0>
+            = <&key_physical_attrs 100 100    0   69       0     0     0>   // 0
+            , <&key_physical_attrs 100 100  100   28       0     0     0>   // 1
+            , <&key_physical_attrs 100 100  200    0       0     0     0>   // 2
+            , <&key_physical_attrs 100 100  300   15       0     0     0>   // 3
+            , <&key_physical_attrs 100 100  400   29       0     0     0>   // 4
+            , <&key_physical_attrs 100 100  900   32       0     0     0>   // 5
+            , <&key_physical_attrs 100 100 1000   17       0     0     0>   // 6
+            , <&key_physical_attrs 100 100 1100    3       0     0     0>   // 7
+            , <&key_physical_attrs 100 100 1200   30       0     0     0>   // 8
+            , <&key_physical_attrs 100 100 1300   71       0     0     0>   // 9
+            , <&key_physical_attrs 100 100    0  169       0     0     0>   // 10
+            , <&key_physical_attrs 100 100  100  128       0     0     0>   // 11
+            , <&key_physical_attrs 100 100  200  100       0     0     0>   // 12
+            , <&key_physical_attrs 100 100  300  115       0     0     0>   // 13
+            , <&key_physical_attrs 100 100  400  129       0     0     0>   // 14
+            , <&key_physical_attrs 100 100  800  170       0     0     0>   // 15
+            , <&key_physical_attrs 100 100  900  132       0     0     0>   // 16
+            , <&key_physical_attrs 100 100 1000  117       0     0     0>   // 17
+            , <&key_physical_attrs 100 100 1100  103       0     0     0>   // 18
+            , <&key_physical_attrs 100 100 1200  130       0     0     0>   // 19
+            , <&key_physical_attrs 100 100 1300  171       0     0     0>   // 20
+            , <&key_physical_attrs 100 100    0  269       0     0     0>   // 21
+            , <&key_physical_attrs 100 100  100  228       0     0     0>   // 22
+            , <&key_physical_attrs 100 100  200  200       0     0     0>   // 23
+            , <&key_physical_attrs 100 100  300  215       0     0     0>   // 24
+            , <&key_physical_attrs 100 100  400  229       0     0     0>   // 25
+            , <&key_physical_attrs 100 100  500  260       0     0     0>   // 26
+            , <&key_physical_attrs 100 100  800  270       0     0     0>   // 27
+            , <&key_physical_attrs 100 100  900  232       0     0     0>   // 28
+            , <&key_physical_attrs 100 100 1000  217       0     0     0>   // 29
+            , <&key_physical_attrs 100 100 1100  203       0     0     0>   // 30
+            , <&key_physical_attrs 100 100 1200  230       0     0     0>   // 31
+            , <&key_physical_attrs 100 100 1300  271       0     0     0>   // 32
+            , <&key_physical_attrs 100 100    0  369       0     0     0>   // 33
+            , <&key_physical_attrs 100 100  100  328       0     0     0>   // 34
+            , <&key_physical_attrs 100 100  200  300       0     0     0>   // 35
+            , <&key_physical_attrs 100 100  336  352       0     0     0>   // 36
+            , <&key_physical_attrs 100 100  445  361    1000   495   411>   // 37
+            , <&key_physical_attrs 100 100  550  390    2000   600   440>   // 38
+            , <&key_physical_attrs 100 100  756  406 (-2000)   806   456>   // 39
+            , <&key_physical_attrs 100 100  867  376 (-1000)   917   426>   // 40
+            , <&key_physical_attrs 100 100 1300  371       0     0     0>   // 41
             ;
     };
 
@@ -89,18 +97,16 @@
     trackball_central_listener: trackball_central_listener {
         compatible = "zmk,input-listener";
         status = "disabled";
-        input-processors = 
-            <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>;         //Y軸反転
-            //<&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
-            //<&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-            //<&zip_temp_layer 5 500>;                            //オートマウスレイヤーの選択
+        /* DYA Studio で動的に編集できるよう、入力プロセッサは
+           overlay 側で &mouse_runtime_input_processor /
+           &scroll_runtime_input_processor へ委譲する */
     };
 
     left_encoder: encoder_left {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <96>;
         status = "disabled";
     };
 
@@ -111,7 +117,7 @@
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <10>;
+        triggers-per-rotation = <24>;
     };
 
 };
