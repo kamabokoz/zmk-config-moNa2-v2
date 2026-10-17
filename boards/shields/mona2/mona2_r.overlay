@@ -117,10 +117,86 @@
         #input-processor-cells = <0>;
     };
 
+    /* ─────────────────────────────────────────────────────────
+       レイヤー別のトラックボール速度 (DYA Studio のトラックボールタブで個別に調整)
+       - "mouse" (layer0 は常に有効) が全レイヤー共通の基本速度。
+       - 下記は各レイヤーが有効な間だけ追加で掛かる倍率 (既定 1.0x = 変化なし)。
+         複数レイヤーが同時に有効なら倍率は掛け合わされる。
+       - layer3 (SCRL_W) は scroll プロセッサで調整する。
+       - 設定は processor-label 単位で保存されるので、ラベルは変更しないこと (最大7文字)。
+       - 1 プロセッサあたり RAM 約 6.4KB (慣性トラッキング用バッファ)。
+       ────────────────────────────────────────────────────── */
+    layer_speed_l1: layer_speed_l1 {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "NUM_W";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        track-remainders;
+        active-layers = <0x00000002>; /* layer1 (NUM_W) */
+        #input-processor-cells = <0>;
+    };
+
+    layer_speed_l2: layer_speed_l2 {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "MOUSE_W";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        track-remainders;
+        active-layers = <0x00000004>; /* layer2 (MOUSE_W) */
+        #input-processor-cells = <0>;
+    };
+
+    layer_speed_l4: layer_speed_l4 {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "FN_W";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        track-remainders;
+        active-layers = <0x00000010>; /* layer4 (FN_W) */
+        #input-processor-cells = <0>;
+    };
+
+    layer_speed_l5: layer_speed_l5 {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "FN2";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        track-remainders;
+        active-layers = <0x00000020>; /* layer5 (FN2) */
+        #input-processor-cells = <0>;
+    };
+
+    layer_speed_l6: layer_speed_l6 {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "BLE_W";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        track-remainders;
+        active-layers = <0x00000040>; /* layer6 (BLE_W) */
+        #input-processor-cells = <0>;
+    };
+
 };
 
 &trackball_central_listener {
     status = "okay";
     device = <&trackball_central>;
-    input-processors = <&mg &mouse_runtime_input_processor &scroll_runtime_input_processor &zip_scroll_scaler 1 100 &inertial_scroll>;
+    input-processors = <&mg &mouse_runtime_input_processor
+                        &layer_speed_l1 &layer_speed_l2 &layer_speed_l4 &layer_speed_l5 &layer_speed_l6
+                        &scroll_runtime_input_processor &zip_scroll_scaler 1 100 &inertial_scroll>;
 };
